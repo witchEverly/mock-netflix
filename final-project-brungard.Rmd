@@ -1,12 +1,21 @@
 ---
-output:
-  pdf_document: default
-  html_document: default
+editor_options:
+  markdown:
+    wrap: 72
+output: pdf_document
 ---
-```{R, message=FALSE}
+
+```{R}
 library(gplots)
 library(patchwork)
 ```
+
+# First Round of Experiments
+
+Due to a flaw in design choice this data could not be used in any
+analysis
+
+# Second Round of Experiments
 
 ```{r}
 final_data <-read.csv(file = '../results_encoded_EXP1.csv')
@@ -17,7 +26,7 @@ model <- lm(Browse_Time ~ Prev_Length * Match_Score * Tile_Size * Prev_Type, dat
 summary(model)
 ```
 
-## Reduced model
+Reduced model to confirm, this is not really needed.
 
 ```{r}
 # formally test the reduced model
@@ -36,13 +45,15 @@ model_reduced <- lm(Browse_Time ~ Tile_Size +
                     data = final_data
                     )
 
-# summary(model_reduced)
+summary(model_reduced)
 ```
 
-Huge p-value for reduced model so fail to reject that the H0 (insignificant) is zero <- weird
-
+Huge p-value for reduced model so fail to reject that the H0
+(insignificant) is zero, this is a weird way to test by trying to prove
+evidence for the null hypothesis but okay.
 
 ```{r}
+par(mfrow = c(1, 3))
 plotmeans(Browse_Time ~ Prev_Length,
           data = final_data,
       #    ylim = c(0.4, 0.7),
@@ -62,17 +73,24 @@ plotmeans(Browse_Time ~ Prev_Type,
           legends = c("Low", "High"))
 ```
 
+Lower browsing times are associated with:
+
+Preview length is lower
+
+Match score is higher
+
+Preview type is a teaser trailer
 
 ```{r}
 # par(mfrow = c(1, 2))
 
 # Preview Length and Match Score interaction effect
 interaction.plot(
-  final_data$Prev_Length, 
   final_data$Match_Score, 
+  final_data$Prev_Length, 
   final_data$Browse_Time, 
   xaxt = "n",
-  legend = FALSE, 
+  legend = T, 
   # ylab = "Avg Session Duration (min)",
 #  xlab = "Opening Feed",
  #  ylim = c(2, 10)
@@ -92,17 +110,28 @@ axis(
 # moi.by.A.by.B <- aggregate(x = redditFD$y, by = list(A = redditFD$A, B = redditFD$B),
 #     FUN = mean)
 # points(x = c(1, 2, 1, 2), y = moi.by.A.by.B$x, pch = 16)
-
 ```
 
+When preview length and match score are both low browsing time is above
+20 minutes, on average.
 
+When match score is at a high level this browsing time is much lower,
+however this is only true when preview types are shorter. When preview
+types are shorter in duration, there is an interaction effect that
+reduces the average browse time for high scoring matches.
 
+In turn, the next round of experiments should probably be one where
+match score in a high range and browsing time is in a low range.
+
+# Third Round of Experiments
+
+Because tile size was not a significant predictor it is dropped, and we
+also decide to hold preview type fixed at a teaser trailer this is
+because it is a significant indicator of decreased browsing time.
 
 ```{r}
 final_data_exp2 <- read.csv(file = '../results_encoded_EXP2.csv')
 ```
-
-
 
 ```{r}
 head(final_data_exp2)
@@ -113,27 +142,30 @@ model <- lm(Browse_Time ~ Prev_Length * Match_Score, data=final_data_exp2)
 summary(model)
 ```
 
-
 ```{r}
 par(mfrow = c(1, 2))
 
 plotmeans(Browse_Time ~ Prev_Length,
           data = final_data_exp2,
-      #    ylim = c(0.4, 0.7),
+          ylim = c(13.5, 16.0),
           main = "Prev_Length", 
           legends = c("Low", "High"))
 
 plotmeans(Browse_Time ~ Match_Score,
           data = final_data_exp2,
-      #    ylim = c(0.4, 0.7),
+          ylim = c(13.5, 16.0),
           main = "Match_Score", 
           legends = c("Low", "High"))
+```
 
+Same insights as before, but we note that average browse time has
+decreased since the conditions were changed.
 
+```{r}
 # Preview Length and Match Score interaction effect
 interaction.plot(
-  final_data_exp2$Prev_Length, 
   final_data_exp2$Match_Score, 
+  final_data_exp2$Prev_Length, 
   final_data_exp2$Browse_Time, 
   #xaxt = "n",
   legend = T, 
@@ -149,29 +181,38 @@ axis(
     )
 ```
 
+In the second round of experiments the interaction changes. It is not as
+drastic but still remains a statistically significant interaction.
+
+When preview length changes from low to high level there is a much wider
+gap between mean browsing times
+
+The plot indicates that we should stay with lower ranges of preview
+types as higher configurations are associated with higher browse times,
+as specially when match score is higher.
+
+## Effect size of factors?
+
+From the interaction plot seems it has a greater effect on browsing
+time, but the slope is much steeper when preview length
+
+# Scratch Section
+
+2\^3 is a cube, square to cube
+
+effect size
+
+OLS
+
+estimation of beta hat with OLS
+
+F
 
 
+Next step 
 
-
-# Scratch
-
-$$
-\text{Prev.Length}: \{low=40, high=110\} \\
-\text{Match.Score}: \{low=30, high=100\} \\
-\text{Tile.Size}: \{low=0.1, high=0.4\} \\
-\text{Prev.Type}: \{AC, TT\} \\
-$$
-
-Next step
 $$
 \text{Prev.Length}: \{low, medium, high\} \\
 \text{Match.Score}: \{low, medium, high\} \\
-\text{Prev.Type}: \{AC, TT\} \\
-$$
-
-
-$$
-\text{Prev.Length}: \{low=40, high=110\} \\
-\text{Match.Score}: \{low=80, high=100\} \\
 \text{Prev.Type}: \{AC, TT\} \\
 $$
