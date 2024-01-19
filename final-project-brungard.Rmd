@@ -1,27 +1,21 @@
-```{R}
+---
+output:
+  pdf_document: default
+  html_document: default
+---
+```{R, message=FALSE}
 library(gplots)
 library(patchwork)
 ```
 
 ```{r}
-final_data <-read.csv(file = 'results_encoded_EXP1.csv')
+final_data <-read.csv(file = '../results_encoded_EXP1.csv')
 ```
 
 ```{r}
 model <- lm(Browse_Time ~ Prev_Length * Match_Score * Tile_Size * Prev_Type, data=final_data)
 summary(model)
 ```
-
-
-2^3 is a cube, square to cube
-
-effect size
-
-OLS
-
-estimation of beta hat with OLS
-
-F
 
 ## Reduced model
 
@@ -42,7 +36,7 @@ model_reduced <- lm(Browse_Time ~ Tile_Size +
                     data = final_data
                     )
 
-summary(model_reduced)
+# summary(model_reduced)
 ```
 
 Huge p-value for reduced model so fail to reject that the H0 (insignificant) is zero <- weird
@@ -105,7 +99,7 @@ axis(
 
 
 ```{r}
-final_data_exp2 <- read.csv(file = 'results_encoded_EXP2.csv')
+final_data_exp2 <- read.csv(file = '../results_encoded_EXP2.csv')
 ```
 
 
@@ -181,22 +175,3 @@ $$
 \text{Match.Score}: \{low=80, high=100\} \\
 \text{Prev.Type}: \{AC, TT\} \\
 $$
-
-# BC interaction effect
-interaction.plot(redditFD$B, redditFD$C, redditFD$y, xaxt = "n", legend = FALSE, 
-    ylab = "Avg Session Duration (min)", xlab = "Feed Type", ylim = c(2, 
-        10))
-axis(side = 1, at = 1:2, labels = c("Pagination", "Infinite Scroll"))
-legend("bottomright", legend = c("Ad Frequency", "4:1", "9:1"), lty = c(1, 
-    1, 2), col = c("white", "black", "black"), cex = 0.5, bty = "n")
-moi.by.B.by.C <- aggregate(x = redditFD$y, by = list(B = redditFD$B, C = redditFD$C), 
-    FUN = mean)
-points(x = c(1, 2, 1, 2), y = moi.by.B.by.C$x, pch = 16)
-
-
-model_reduced <- lm(Browse_Time ~ Prev_Length +
-                      Match_Score +
-                      Prev_Type + 
-                      Prev_Length:Match_Score,
-                    data = final_data)
-summary(model_reduced)
