@@ -1,0 +1,202 @@
+```{R}
+library(gplots)
+library(patchwork)
+```
+
+```{r}
+final_data <-read.csv(file = 'results_encoded_EXP1.csv')
+```
+
+```{r}
+model <- lm(Browse_Time ~ Prev_Length * Match_Score * Tile_Size * Prev_Type, data=final_data)
+summary(model)
+```
+
+
+2^3 is a cube, square to cube
+
+effect size
+
+OLS
+
+estimation of beta hat with OLS
+
+F
+
+## Reduced model
+
+```{r}
+# formally test the reduced model
+# insignificant terms
+model_reduced <- lm(Browse_Time ~ Tile_Size + 
+                      Prev_Length:Tile_Size + 
+                      Match_Score:Tile_Size + 
+                      Prev_Length:Prev_Type +
+                      Match_Score:Prev_Type +
+                      Tile_Size:Prev_Type +
+                      Prev_Length:Match_Score:Tile_Size +
+                      Prev_Length:Match_Score:Prev_Type + 
+                      Prev_Length:Tile_Size:Prev_Type +
+                      Match_Score:Tile_Size:Prev_Type +
+                      Prev_Length:Match_Score:Tile_Size:Prev_Type,
+                    data = final_data
+                    )
+
+summary(model_reduced)
+```
+
+Huge p-value for reduced model so fail to reject that the H0 (insignificant) is zero <- weird
+
+
+```{r}
+plotmeans(Browse_Time ~ Prev_Length,
+          data = final_data,
+      #    ylim = c(0.4, 0.7),
+          main = "Prev_Length", 
+          legends = c("Low", "High"))
+
+plotmeans(Browse_Time ~ Match_Score,
+          data = final_data,
+      #    ylim = c(0.4, 0.7),
+          main = "Match_Score", 
+          legends = c("Low", "High"))
+
+plotmeans(Browse_Time ~ Prev_Type,
+          data = final_data,
+      #    ylim = c(0.4, 0.7),
+          main = "Prev_Type", 
+          legends = c("Low", "High"))
+```
+
+
+```{r}
+# par(mfrow = c(1, 2))
+
+# Preview Length and Match Score interaction effect
+interaction.plot(
+  final_data$Prev_Length, 
+  final_data$Match_Score, 
+  final_data$Browse_Time, 
+  xaxt = "n",
+  legend = FALSE, 
+  # ylab = "Avg Session Duration (min)",
+#  xlab = "Opening Feed",
+ #  ylim = c(2, 10)
+  )
+
+axis(
+    side = 1,
+    at = 1:2,
+    labels = c("Low", "High")
+    )
+
+
+# axis(
+#   side = 1, at = 1:2, labels = c("Home", "Popular"))
+# legend("topleft", legend = c("Feed Type", "Infinite Scroll", "Pagination"),
+#     lty = c(1, 1, 2), col = c("white", "black", "black"), cex = 0.5, bty = "n")
+# moi.by.A.by.B <- aggregate(x = redditFD$y, by = list(A = redditFD$A, B = redditFD$B),
+#     FUN = mean)
+# points(x = c(1, 2, 1, 2), y = moi.by.A.by.B$x, pch = 16)
+
+```
+
+
+
+
+```{r}
+final_data_exp2 <- read.csv(file = 'results_encoded_EXP2.csv')
+```
+
+
+
+```{r}
+head(final_data_exp2)
+```
+
+```{r}
+model <- lm(Browse_Time ~ Prev_Length * Match_Score, data=final_data_exp2)
+summary(model)
+```
+
+
+```{r}
+par(mfrow = c(1, 2))
+
+plotmeans(Browse_Time ~ Prev_Length,
+          data = final_data_exp2,
+      #    ylim = c(0.4, 0.7),
+          main = "Prev_Length", 
+          legends = c("Low", "High"))
+
+plotmeans(Browse_Time ~ Match_Score,
+          data = final_data_exp2,
+      #    ylim = c(0.4, 0.7),
+          main = "Match_Score", 
+          legends = c("Low", "High"))
+
+
+# Preview Length and Match Score interaction effect
+interaction.plot(
+  final_data_exp2$Prev_Length, 
+  final_data_exp2$Match_Score, 
+  final_data_exp2$Browse_Time, 
+  #xaxt = "n",
+  legend = T, 
+ # ylab = "Browse_Time",
+#  xlab = "Prev_Length",
+ #  ylim = c(2, 10)
+  )
+
+axis(
+    side = 1,
+    at = 1:2,
+    labels = c("Low", "High")
+    )
+```
+
+
+
+
+
+# Scratch
+
+$$
+\text{Prev.Length}: \{low=40, high=110\} \\
+\text{Match.Score}: \{low=30, high=100\} \\
+\text{Tile.Size}: \{low=0.1, high=0.4\} \\
+\text{Prev.Type}: \{AC, TT\} \\
+$$
+
+Next step
+$$
+\text{Prev.Length}: \{low, medium, high\} \\
+\text{Match.Score}: \{low, medium, high\} \\
+\text{Prev.Type}: \{AC, TT\} \\
+$$
+
+
+$$
+\text{Prev.Length}: \{low=40, high=110\} \\
+\text{Match.Score}: \{low=80, high=100\} \\
+\text{Prev.Type}: \{AC, TT\} \\
+$$
+
+# BC interaction effect
+interaction.plot(redditFD$B, redditFD$C, redditFD$y, xaxt = "n", legend = FALSE, 
+    ylab = "Avg Session Duration (min)", xlab = "Feed Type", ylim = c(2, 
+        10))
+axis(side = 1, at = 1:2, labels = c("Pagination", "Infinite Scroll"))
+legend("bottomright", legend = c("Ad Frequency", "4:1", "9:1"), lty = c(1, 
+    1, 2), col = c("white", "black", "black"), cex = 0.5, bty = "n")
+moi.by.B.by.C <- aggregate(x = redditFD$y, by = list(B = redditFD$B, C = redditFD$C), 
+    FUN = mean)
+points(x = c(1, 2, 1, 2), y = moi.by.B.by.C$x, pch = 16)
+
+
+model_reduced <- lm(Browse_Time ~ Prev_Length +
+                      Match_Score +
+                      Prev_Type + 
+                      Prev_Length:Match_Score,
+                    data = final_data)
+summary(model_reduced)

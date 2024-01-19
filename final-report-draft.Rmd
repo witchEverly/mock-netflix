@@ -1,0 +1,83 @@
+---
+title: "Browsing Time Minimization"
+subtitle: "A Netflix Inspired Experiment"
+author: "S. Asiedu-Ofei, J. Brungard, K. Nawani, S. Shen"
+date: "2024-01-13"
+output:
+  pdf_document: default
+  html_document: default
+editor_options: 
+  markdown: 
+    wrap: sentence
+---
+
+# Executive Summary
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+Donec auctor, nisl eget ultricies ultricies, nunc nunc ultricies nunc, nec ultricies nunc nunc eget nunc.
+Donec auctor, nisl eget ultricies ultricies, nunc nunc ultricies nunc, nec ultricies nunc nunc eget nunc.
+
+Donec auctor, nisl eget ultricies ultricies, nunc nunc ultricies nunc, nec ultricies nunc nunc eget nunc.
+Donec auctor, nisl eget ultricies ultricies, nunc nunc ultricies nunc, nec ultricies nunc nunc eget nunc.
+
+\newpage
+
+# Introduction
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+Donec auctor, nisl eget ultricies ultricies, nunc nunc ultricies nunc, nec ultricies nunc nunc eget nunc.
+Donec auctor, nisl eget ultricies ultricies, nunc nunc ultricies nunc, nec ultricies nunc nunc eget nunc.
+
+\newpage
+
+# Experiment Implementation
+
+- The metric of interest is the average time spent browsing before making a selection.
+- The conditions made all 2 possible combinations of the following: Tile Size, User's Match Score, Preview Length, and Preview Type.
+
+## Phase One
+
+- Pareto Principle, where 80% of the effects come from 20% of the causes.
+
+
+## Phase Two
+
+How do we move towards the optimum, are we in the vicienity of the optimum? if not how do I move towards it? 
+
+A systematic approach was taken to find the optimum design.
+
+exploring the region of operability.
+
+In general there is a true but unknown relationship between a function of the x's 
+it could be anything but we are going to be using regressions to estimate the response.
+regression model is a proxy.
+
+
+We stop at two factor interaction due to effect sparsity, 
+
+global optimimum ???? this is where phase two begins?
+
+Check average browsering time at each tile size and show that means are similar. Then show statistical significance.
+
+- table with natural and coded units.
+
+make sure the units are considered 
+
+## Phase Three
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+Donec auctor, nisl eget ultricies ultricies, nunc nunc ultricies nunc, nec ultricies nunc nunc eget nunc.
+Donec auctor, nisl eget ultricies ultricies, nunc nunc ultricies nunc, nec ultricies nunc nunc eget nunc.
+
+Donec auctor, nisl eget ultricies ultricies, nunc nunc ultricies nunc, nec ultricies nunc nunc eget nunc.
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+
+\newpage
+
+# Conclusion
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+Donec auctor, nisl eget ultricies ultricies, nunc nunc ultricies nunc, nec ultricies nunc nunc eget nunc.
+Donec auctor, nisl eget ultricies ultricies, nunc nunc ultricies nunc, nec ultricies nunc nunc eget nunc.
+
+Donec auctor, nisl eget ultricies ultricies, nunc nunc ultricies nunc, nec ultricies nunc nunc eget nunc.
